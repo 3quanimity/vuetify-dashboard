@@ -72,7 +72,7 @@
 <script lang="ts" setup>
 // Imports
 import { ref, watch, onMounted } from "vue";
-import { fetchMonetizationApi } from '@/data/mock/monetization-api';
+import { apiService } from '@/services/api';
 
 // Variables
 const selectedTab = ref(0);
@@ -81,17 +81,11 @@ const apiResult = ref()
 
 // Vue lifecycles
 onMounted(async () => {
-  await fetchMockData();
-})
-
-// API
-// Mock API call
-const fetchMockData = async () => {
   try {
-    const response = await fetchMonetizationApi();
-    apiResult.value = response;
+    const data = await apiService.fetchMonetizationData();
+    apiResult.value = data;
   } catch (error) {
-    console.error('Error fetching mock data:', error);
+    console.error('Error fetching data:', error);
   }
-};
+});
 </script>
