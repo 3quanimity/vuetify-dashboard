@@ -1,7 +1,7 @@
 <template>
   <v-sheet
     rounded="lg"
-    min-height="268"
+    min-height="87vh"
     class="pa-3"
   >
     <v-list-item-title class="text-h5 mb-1 mt-2">

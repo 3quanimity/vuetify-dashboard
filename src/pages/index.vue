@@ -174,15 +174,24 @@
             <v-sheet
               v-if="selectedTab == 0"
               rounded="lg"
-              min-height="268"
               class="pa-3"
+              min-height="87vh"
             >
               <v-list-item-title class="text-h5 mb-1 mt-2">
                 Contact
               </v-list-item-title>
-              <p>Reach out to our support</p>
-              <p>07 59 69 08 80</p>
-              <v-btn>Call</v-btn>
+              <p>Reach out to us</p>
+              <div class="d-flex align-center mt-2 mb-2">
+                <img
+                  src="@/assets/icons/phone.svg"
+                  alt="Phone Icon"
+                  class="me-2"
+                  style="width: 24px; height: 24px;"
+                >
+                <p>
+                  07 59 69 08 80
+                </p>
+              </div>
             </v-sheet>
           </v-col>
         </v-row>
