@@ -47,7 +47,7 @@
               <h2 class="mt-4">
                 Apps List:
               </h2>
-              {{ apiResult }}
+              {{ groupedData }}
             </v-sheet>
 
             <v-sheet
@@ -73,11 +73,13 @@
 // Imports
 import { ref, watch, onMounted } from "vue";
 import { apiService } from '@/services/api';
+import useGroupApps from "../utils/useGroupApps"
 
 // Variables
 const selectedTab = ref(0);
 const links = ref(["Dashboard", "About"]);
 const apiResult = ref()
+const groupedData = ref([])
 
 // Vue lifecycles
 onMounted(async () => {
@@ -88,4 +90,9 @@ onMounted(async () => {
     console.error('Error fetching data:', error);
   }
 });
+
+// Vue Functions 
+watch(apiResult, (newValue) => {
+  groupedData.value = useGroupApps(newValue.data)
+})
 </script>
