@@ -44,7 +44,10 @@
               rounded="lg"
               class="pa-4"
             >
-              Page 0
+              <h2 class="mt-4">
+                Apps List:
+              </h2>
+              {{ apiResult }}
             </v-sheet>
 
             <v-sheet
@@ -52,9 +55,7 @@
               min-height="70vh"
               rounded="lg"
               class="pa-2 pt-4"
-            >
-              Page 1
-            </v-sheet>
+            />
           </v-col>
 
           <!-- RIGHT COLUMN -->
@@ -75,4 +76,17 @@ import { ref, watch, onMounted } from "vue";
 // Variables
 const selectedTab = ref(0);
 const links = ref(["Dashboard", "About"]);
+const apiResult = ref()
+
+// Vue lifecycles
+onMounted(async () => {
+  fetchMonetizationApi();
+})
+
+// API
+const fetchMonetizationApi = async () => {
+  fetch('https://www.anthony-cardinale.fr/_placeholder/monetization-api.json')
+  .then(response => response.json())
+  .then(data => apiResult.value = data)
+}
 </script>
