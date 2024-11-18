@@ -31,7 +31,9 @@
           <v-col
             cols="12"
             sm="2"
-          />
+          >
+            <FilterBloc @search-value-changed="updateSearchValue" />
+          </v-col>
 
           <!-- MAIN COLUMN -->
           <v-col
@@ -82,6 +84,7 @@
                 :headers="headers"
                 item-value="app"
                 show-expand 
+                :search="searchValue"
               >
                 <!-- customizing column titles example -->
                 <template #header.app="{ column }">
@@ -180,6 +183,7 @@ import useGetBestCountry from "../utils/useGetBestCountry"
 
 // Components
 import KpiBloc from "@/components/KpiBloc.vue";
+import FilterBloc from "@/components/FilterBloc.vue";
 
 // Variables
 const selectedTab = ref(0);
@@ -187,6 +191,7 @@ const links = ref(["Dashboard", "About"]);
 const apiResult = ref()
 const groupedData = ref<any[]>([]) // // Explicitly allow any[] to fix the error: Type 'any[]' is not assignable to type 'never[]'
 const expanded = ref([]);
+const searchValue = ref("");
 
 const headers = ref([
   { title: "App",   key: "app" },
@@ -228,5 +233,9 @@ const getTotalOsRevenues= (os = "") => {
 
   return `${useFormatRevenues(total)}`;
 };
+
+const updateSearchValue = (val: any) => {
+  searchValue.value = val
+}
 
 </script>
