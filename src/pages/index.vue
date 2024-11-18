@@ -79,7 +79,7 @@ import useGroupApps from "../utils/useGroupApps"
 const selectedTab = ref(0);
 const links = ref(["Dashboard", "About"]);
 const apiResult = ref()
-const groupedData = ref([])
+const groupedData = ref<any[]>([]) // // Explicitly allow any[] to fix the error: Type 'any[]' is not assignable to type 'never[]'
 
 // Vue lifecycles
 onMounted(async () => {
