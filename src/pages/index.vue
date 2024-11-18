@@ -72,6 +72,20 @@
                         </p>
                         <br>
 
+                        <!-- Chart  -->
+                        <BarChart
+                          class="d-flex mx-auto my-0"
+                          :data="[
+                            item.totalRevenuesUS,
+                            item.totalRevenuesUK,
+                            item.totalRevenuesFR,
+                            item.totalRevenuesJP,
+                            item.totalRevenuesAU,
+                            item.totalRevenuesCN,
+                          ]"
+                        />
+                        <br>
+
                         <!-- Details Row  -->
                         <v-row>
                           <!-- column 1 -->
