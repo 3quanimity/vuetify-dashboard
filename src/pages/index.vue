@@ -72,6 +72,7 @@
 <script lang="ts" setup>
 // Imports
 import { ref, watch, onMounted } from "vue";
+import { fetchMonetizationApi } from '@/data/mock/monetization-api';
 
 // Variables
 const selectedTab = ref(0);
@@ -80,13 +81,17 @@ const apiResult = ref()
 
 // Vue lifecycles
 onMounted(async () => {
-  fetchMonetizationApi();
+  await fetchMockData();
 })
 
 // API
-const fetchMonetizationApi = async () => {
-  fetch('https://www.anthony-cardinale.fr/_placeholder/monetization-api.json')
-  .then(response => response.json())
-  .then(data => apiResult.value = data)
-}
+// Mock API call
+const fetchMockData = async () => {
+  try {
+    const response = await fetchMonetizationApi();
+    apiResult.value = response;
+  } catch (error) {
+    console.error('Error fetching mock data:', error);
+  }
+};
 </script>
