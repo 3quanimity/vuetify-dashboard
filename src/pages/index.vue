@@ -32,7 +32,10 @@
             cols="12"
             sm="2"
           >
-            <FilterBloc @search-value-changed="updateSearchValue" />
+            <FilterBloc
+              v-if="selectedTab == 0"
+              @search-value-changed="updateSearchValue"
+            />
           </v-col>
 
           <!-- MAIN COLUMN -->
@@ -156,17 +159,32 @@
 
             <v-sheet
               v-else
-              min-height="70vh"
               rounded="lg"
-              class="pa-2 pt-4"
-            />
+              class="pa-2"
+            >
+              <AboutPage />
+            </v-sheet>
           </v-col>
 
           <!-- RIGHT COLUMN -->
           <v-col
             cols="12"
             sm="2"
-          />
+          >
+            <v-sheet
+              v-if="selectedTab == 0"
+              rounded="lg"
+              min-height="268"
+              class="pa-3"
+            >
+              <v-list-item-title class="text-h5 mb-1 mt-2">
+                Contact
+              </v-list-item-title>
+              <p>Reach out to our support</p>
+              <p>07 59 69 08 80</p>
+              <v-btn>Call</v-btn>
+            </v-sheet>
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -184,6 +202,7 @@ import useGetBestCountry from "../utils/useGetBestCountry"
 // Components
 import KpiBloc from "@/components/KpiBloc.vue";
 import FilterBloc from "@/components/FilterBloc.vue";
+import AboutPage from "@/components/AboutPage.vue";
 
 // Variables
 const selectedTab = ref(0);
