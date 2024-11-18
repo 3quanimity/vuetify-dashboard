@@ -44,6 +44,33 @@
               rounded="lg"
               class="pa-4"
             >
+              <!-- KPI overview -->
+              <v-row>
+                <v-col>
+                  <KpiBloc
+                    :is-up="false"
+                    bloc-title="Total Android revenues"
+                    :bloc-value="getTotalOsRevenues('android')"
+                  />
+                </v-col>
+                <v-col>
+                  <KpiBloc
+                    :is-up="true"
+                    bloc-title="Total iOS revenues"
+                    :bloc-value="getTotalOsRevenues('ios')"
+                  />
+                </v-col>
+                <v-col>
+                  <KpiBloc
+                    :is-up="true"
+                    bloc-title="Total revenues"
+                    :bloc-value="getTotalOsRevenues('')"
+                  />
+                </v-col>
+              </v-row>
+
+              <v-divider class="mt-4" />
+              
               <h2 class="mt-4">
                 Apps List:
               </h2>
@@ -151,6 +178,9 @@ import useGroupApps from "../utils/useGroupApps"
 import useFormatRevenues from "../utils/useFormatRevenues"
 import useGetBestCountry from "../utils/useGetBestCountry"
 
+// Components
+import KpiBloc from "@/components/KpiBloc.vue";
+
 // Variables
 const selectedTab = ref(0);
 const links = ref(["Dashboard", "About"]);
@@ -184,4 +214,19 @@ onMounted(async () => {
 watch(apiResult, (newValue) => {
   groupedData.value = useGroupApps(newValue.data)
 })
+
+// Functions
+const getTotalOsRevenues= (os = "") => {
+  let total = 0;
+  groupedData.value.forEach((app: any) => {
+    if (os !== "") {
+      total += app.platform == os ? app.totalRevenues : 0;
+    } else {
+      total += app.totalRevenues;
+    }
+  });
+
+  return `${useFormatRevenues(total)}`;
+};
+
 </script>
