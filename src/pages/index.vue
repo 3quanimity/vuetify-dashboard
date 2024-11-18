@@ -47,7 +47,17 @@
               <h2 class="mt-4">
                 Apps List:
               </h2>
-              {{ groupedData }}
+              <v-data-table
+                v-if="groupedData"
+                :items="groupedData"
+                :headers="headers"
+                item-value="app"
+              >
+                <!-- customizing column titles example -->
+                <template #header.app="{column}">
+                  {{ column.title.toUpperCase() }}
+                </template>
+              </v-data-table>
             </v-sheet>
 
             <v-sheet
@@ -80,6 +90,18 @@ const selectedTab = ref(0);
 const links = ref(["Dashboard", "About"]);
 const apiResult = ref()
 const groupedData = ref<any[]>([]) // // Explicitly allow any[] to fix the error: Type 'any[]' is not assignable to type 'never[]'
+
+const headers = ref([
+  { title: "App",   key: "app" },
+  { title: "US",    key: "totalRevenuesUS" },
+  { title: "UK",    key: "totalRevenuesUK" },
+  { title: "FR",    key: "totalRevenuesFR" },
+  { title: "JP",    key: "totalRevenuesJP" },
+  { title: "CN",    key: "totalRevenuesCN" },
+  { title: "AU",    key: "totalRevenuesAU" },
+  { title: "Total", key: "totalRevenues" },
+  { title: "",      key: "data-table-expand" }, // expand row for more details
+]);
 
 // Vue lifecycles
 onMounted(async () => {
