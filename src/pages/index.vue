@@ -47,15 +47,65 @@
               <h2 class="mt-4">
                 Apps List:
               </h2>
-              <v-data-table
+
+              <v-data-table 
                 v-if="groupedData"
+                v-model:expanded="expanded" 
                 :items="groupedData"
                 :headers="headers"
                 item-value="app"
+                show-expand 
               >
                 <!-- customizing column titles example -->
-                <template #header.app="{column}">
+                <template #header.app="{ column }">
                   {{ column.title.toUpperCase() }}
+                </template>
+
+                <!-- expandable zone -->
+                <template #expanded-row="{ columns, item }">
+                  <tr>
+                    <td :colspan="columns.length">
+                      <div style="padding: 15px">
+                        <p>
+                          The country that generated the most revenue for
+                          {{ item.app }} is {{ useGetBestCountry(item) }}
+                        </p>
+                        <br>
+
+                        <!-- Details Row  -->
+                        <v-row>
+                          <!-- column 1 -->
+                          <v-col>
+                            Total ads views: <b>{{ item.totalViews }}</b> <br>
+                            Total conversions: <b>{{ item.totalConversions }}</b>
+                            <br>
+                            Conversions %:
+                            <b>{{
+                              (
+                                (item.totalConversions * 100) /
+                                item.totalViews
+                              ).toFixed(2)
+                            }}
+                              %</b>
+                            <br>
+                            Total revenues:
+                            <b>{{ useFormatRevenues(item.totalRevenues) }}</b>
+                          </v-col>
+                          <!-- column 2 -->
+                          <v-col>
+                            Total banner revenues:
+                            <b>{{ useFormatRevenues(item.banner) }}</b><br>
+                            Total full-screen revenues:
+                            <b>{{ useFormatRevenues(item.fullscreen) }}</b><br>
+                            Total video revenues:
+                            <b>{{ useFormatRevenues(item.video) }}</b><br>
+                            Total rewarded revenues:
+                            <b>{{ useFormatRevenues(item.rewarded) }}</b><br>
+                          </v-col>
+                        </v-row>
+                      </div>
+                    </td>
+                  </tr>
                 </template>
               </v-data-table>
             </v-sheet>
@@ -84,12 +134,15 @@
 import { ref, watch, onMounted } from "vue";
 import { apiService } from '@/services/api';
 import useGroupApps from "../utils/useGroupApps"
+import useFormatRevenues from "../utils/useFormatRevenues"
+import useGetBestCountry from "../utils/useGetBestCountry"
 
 // Variables
 const selectedTab = ref(0);
 const links = ref(["Dashboard", "About"]);
 const apiResult = ref()
 const groupedData = ref<any[]>([]) // // Explicitly allow any[] to fix the error: Type 'any[]' is not assignable to type 'never[]'
+const expanded = ref([]);
 
 const headers = ref([
   { title: "App",   key: "app" },
